@@ -12,32 +12,7 @@ class FamilyStructure:
     def __init__(self, last_name):
         self.last_name = last_name
         self._next_id = 1
-       
-
-        # example list of members
-        self._members = [
-               {
-                "id": self._generate_id(),
-                "first_name": "John",
-                "last_name": self.last_name,
-                "age": 33,
-                "Lucky Numbers": [7, 13, 22]
-            },
-            {
-                "id": self._generate_id(),
-                "name": "Jane",
-                "last_name": self.last_name,
-                "age": 35,
-                "Lucky Numbers": [10, 14, 3]
-            },
-            {
-               "id": self._generate_id(),
-                "name": "Jimmy",
-                "last_name": self.last_name,
-                "age": 5,
-                "Lucky Numbers": [1]
-            }
-        ]
+        self._members = []
 
     # read-only: Use this method to generate random members ID's when adding members into the list
     # read-only: Utilice este método para generar ID de miembros aleatorios al agregar miembros a la lista
@@ -47,33 +22,34 @@ class FamilyStructure:
         return generated_id
 
     def add_member(self, member):
-        #Agrega un nuevo miembro a la lista de miembros.
-        if member not in self.members:  # Verifica si el miembro ya existe
-            self.members.append(member)  # Agrega el miembro a la lista
-            return f'Miembro {member["name"]} añadido.'
-        else:
-            return f'El miembro {member["name"]} ya existe en la lista.'
-        # fill this method and update the return
-        # rellene este método y actualice la declaración
-        pass
+        member["last_name"] = self.last_name
+        member["id"] = self._generate_id()
+        member["lucky_numbers"] = list(member.get("lucky_numbers", set()))
+        self._members.append(member)
 
+        return member
+        # if member not in self._members:  # Verifica si el miembro ya existe
+        #     self._members.append(member)  # Agrega el miembro a la lista
+        #     return f'Miembro {member} añadido.'
+        # else:
+        #     return f'El miembro {member} ya existe en la lista.'
+
+   
     def delete_member(self, id):
         # Busca el miembro por id y lo elimina
-        for member in self.members:
+        for member in self._members:
             if member['id'] == id:
-                self.members.remove(member)
+                self._members.remove(member)
                 return f'Miembro con id {id} ha sido eliminado.'
         return f'Miembro con id {id} no encontrado.'
         # fill this method and update the return
-        pass
+        
 
     def get_member(self, id):
-        for member in self.members:
+        for member in self._members:
             if member['id'] == id:
                 return member 
-
-        # fill this method and update the return
-        pass
+        return None
 
     # this method is done, it returns a list with all the family members
     def get_all_members(self):
