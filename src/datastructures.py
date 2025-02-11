@@ -14,8 +14,9 @@ class FamilyStructure:
         self._next_id = 1
         self._members = []
 
-    # read-only: Use this method to generate random members ID's when adding members into the list
+    
     # read-only: Utilice este método para generar ID de miembros aleatorios al agregar miembros a la lista
+
     def _generate_id(self):
         generated_id = self._next_id
         self._next_id += 1
@@ -23,20 +24,16 @@ class FamilyStructure:
 
     def add_member(self, member):
         member["last_name"] = self.last_name
-        member["id"] = self._generate_id()
+        if "id" not in member:
+            member["id"] = self._generate_id()
         member["lucky_numbers"] = list(member.get("lucky_numbers", set()))
         self._members.append(member)
 
         return member
-        # if member not in self._members:  # Verifica si el miembro ya existe
-        #     self._members.append(member)  # Agrega el miembro a la lista
-        #     return f'Miembro {member} añadido.'
-        # else:
-        #     return f'El miembro {member} ya existe en la lista.'
 
-   
+   # Busca el miembro por id y lo elimina
+
     def delete_member(self, id):
-        # Busca el miembro por id y lo elimina
         for member in self._members:
             if member['id'] == id:
                 self._members.remove(member)

@@ -78,8 +78,6 @@ def get_member(id):
         return jsonify({"error": "Internal Server Error", "message": str(e)}), 500  # Error 500 para otros errores
 
 
-
-
 @app.route('/member', methods=['POST'])
 def create_member():
     member = request.json
@@ -90,16 +88,6 @@ def create_member():
     if not member or 'name' not in member:
         return jsonify({"msg": "Falta nombre del miembro"}), 400
     
-    # # Obtener el cuerpo de la solicitud
-    # member = request.json
-    # # Verificar que el cuerpo de la solicitud contenga los datos necesarios
-    # if not member or 'name' not in member:
-    #     return jsonify({"msg": "Falta nombre del miembro"}), 400
-    # # Agregar el nuevo miembro a la lista
-    # jackson_family.add_member(member)
-    # return jsonify({"msg": "miembro añadido"}), 200
-
-   
 
 @app.route('/member/<int:id>', methods=['DELETE'])
 def delete_member(id):
@@ -107,7 +95,7 @@ def delete_member(id):
  
     if member:
         jackson_family.delete_member(id)
-        return jsonify({"msg": f"Miembro eliminado: {member}"}), 200
+        return jsonify({"msg": f"Miembro eliminado: {member}", "done": True}), 200
     else:
         return jsonify({"error": "Miembro no encontrado"}), 400
 
